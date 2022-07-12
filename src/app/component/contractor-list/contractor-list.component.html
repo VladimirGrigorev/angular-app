@@ -1,0 +1,26 @@
+<div class="card my-5">
+  <div class="card-body">
+    <table class="table table-bordered table-striped ag-theme-balham">
+      <thead class="thead-dark">
+      <tr>
+        <th scope="col">Обозначение</th>
+        <th scope="col">Полное название</th>
+        <th scope="col">Юридический адрес</th>
+        <th scope="col">ИНН</th>
+        <th scope="col">КПП</th>
+        <th scope="col">Укрупненный перечень товаров/услуг</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let contractor of contractors">
+        <td>{{ contractor.lbl }}</td>
+        <td>{{ contractor.nameFull }}</td>
+        <td>{{ contractor.address }}</td>
+        <td>{{ contractor.inn }}</td>
+        <td>{{ contractor.kpp }}</td>
+        <td>{{ contractor.listWork }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
