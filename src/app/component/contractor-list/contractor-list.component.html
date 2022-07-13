@@ -1,3 +1,81 @@
+<header class="toolbar" style="background-color: rgb(202, 238, 218);">
+  <div class="toolbar__content" style="height: 40px;">
+    <div class="container-fluid">
+      <div class="row">
+
+        <div class="col-2">
+          <section class="filter-wrapper">
+            <div class="keyword-wrapper">
+              <input [formControl]="queryField" type="text" placeholder="Поиск..." autofocus/>
+            </div>
+          </section>
+        </div>
+
+        <div class="col-2">
+          <div class="btn-group" role="group">
+            <button id="btnGroupDrop1" type="button" class="btn btn-light btn-sm dropdown-toggle"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+              <a>Действия</a>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+              <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#filterModal">Фильтр</a></li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    </div>
+</header>
+
+<!-- Модальное окно -->
+<div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="filterModalLabel">Фильтр</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+      </div>
+      <div class="modal-body">
+
+        <form>
+          <label class="form-label">Столбец</label>
+          <select [(ngModel)]="column" name="column" id="column">
+            <option value="lbl">Обозначение</option>
+            <option value="nameFull">Полное название</option>
+            <option value="address">Юридический адрес</option>
+            <option value="inn">ИНН</option>
+            <option value="kpp">КПП</option>
+            <option value="listWork">Укрупненный перечень товаров/услуг</option>
+          </select>
+
+          <label class="form-label">Оператор</label>
+          <select [(ngModel)]="operator" name="operator" id="operator" (change)="valueChange($event)">
+            <option value="contains">содержит</option>
+            <option value="equals">равняется</option>
+            <option value="not equal">не равняется</option>
+            <option value="starts with">начинается с</option>
+            <option value="ends with">заканчивается на</option>
+            <option value="blank">пустой</option>
+            <option value="not blank">не пустой</option>
+          </select>
+
+          <div *ngIf="showExpression">
+            <label class="form-label">Выражение</label>
+            <input [(ngModel)]="expression" type="text" id="expression" name="expression" placeholder="Выражение">
+          </div>
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Отмена</button>
+        <button type="button" class="btn btn-outline-success"
+                (click)="onSubmit(column, operator, expression)">Применить</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="card my-5">
   <div class="card-body">
     <table class="table table-bordered table-striped ag-theme-balham">
