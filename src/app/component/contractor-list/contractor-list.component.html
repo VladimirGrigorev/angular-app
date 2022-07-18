@@ -1,14 +1,28 @@
+<div class="container container--fluid">
+  <div class="contractors-page">
+    <h1>Контрагенты</h1>
+  </div>
+</div>
+
 <header class="toolbar" style="background-color: rgb(202, 238, 218);">
   <div class="toolbar__content" style="height: 40px;">
     <div class="container-fluid">
       <div class="row">
 
-        <div class="col-2">
-          <section class="filter-wrapper">
-            <div class="keyword-wrapper">
-              <input [formControl]="queryField" type="text" placeholder="Поиск..." autofocus/>
-            </div>
-          </section>
+        <div class="col-3">
+          <div class="input-group">
+            <select [(ngModel)]="searchColumn" name="searchColumn" id="searchColumn"
+                    (change)="searchColumnChange($event)">
+              <option value="">Все столбцы</option>
+              <option value="lbl">Обозначение</option>
+              <option value="nameFull">Полное название</option>
+              <option value="address">Юридический адрес</option>
+              <option value="inn">ИНН</option>
+              <option value="kpp">КПП</option>
+              <option value="listWork">Укрупненный перечень товаров/услуг</option>
+            </select>
+            <input [formControl]="queryField" type="text" placeholder="Поиск..." autofocus/>
+          </div>
         </div>
 
         <div class="col-2">
@@ -18,7 +32,8 @@
               <a>Действия</a>
             </button>
             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-              <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#filterModal">Фильтр</a></li>
+              <li><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#filterModal">Фильтр</button></li>
+              <li><button class="dropdown-item" (click)="clearFilter()">Очистить фильтр</button></li>
             </ul>
           </div>
         </div>
@@ -27,6 +42,14 @@
     </div>
     </div>
 </header>
+
+<!-- Фильтры -->
+<div *ngFor="let cond of filter.cond; let i=index" class="filter-list">
+  <label class="filter-label">
+    Фильтр: столбец-{{cond.field}} оператор-{{cond.operator}} выражение-{{cond.value}}
+    <button type="button" class="btn btn-light btn-sm bi bi-x-lg" (click)="deleteFilter(i)"></button>
+  </label>
+</div>
 
 <!-- Модальное окно -->
 <div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
@@ -52,6 +75,7 @@
           <label class="form-label">Оператор</label>
           <select [(ngModel)]="operator" name="operator" id="operator" (change)="valueChange($event)">
             <option value="contains">содержит</option>
+            <option value="not contains">не содержит</option>
             <option value="equals">равняется</option>
             <option value="not equal">не равняется</option>
             <option value="starts with">начинается с</option>
@@ -68,7 +92,7 @@
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Отмена</button>
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Закрыть</button>
         <button type="button" class="btn btn-outline-success"
                 (click)="onSubmit(column, operator, expression)">Применить</button>
       </div>
@@ -76,10 +100,11 @@
   </div>
 </div>
 
-<div class="card my-5">
+<!-- Таблица контрагентов -->
+<div class="card my-3">
   <div class="card-body">
-    <table class="table table-bordered table-striped ag-theme-balham">
-      <thead class="thead-dark">
+    <table class="table theme-balham table-bordered">
+      <thead class="thead-green">
       <tr>
         <th scope="col">Обозначение</th>
         <th scope="col">Полное название</th>

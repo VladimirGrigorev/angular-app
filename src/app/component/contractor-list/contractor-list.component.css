@@ -1,21 +1,39 @@
-.ag-theme-balham {
+h1 {
+  display: block;
+  font-size: 18px;
+
+  margin-left: 20px;
+  color: #42b983;
+}
+
+.container--fluid {
+  max-width: 100%;
+}
+
+.container {
+  width: 100%;
+  margin-top: 8px;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 10px;
+}
+
+.theme-balham {
   color: #000;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif;
   font-size: 12px;
-  line-height: normal;
 }
 
 input[type=text] {
   padding-left: 12px;
-  border: 1px solid #000;
+  border: 1px solid #ccc;
   border-radius: 4px;
   margin-top: 5px;
-  margin-left: 20px;
   height: 30px;
 }
 
 .btn-group{
-  border: 1px solid #000;
+  border: 1px solid #ccc;
   border-radius: 4px;
   margin-top: 5px;
   height: 30px;
@@ -38,6 +56,26 @@ a{
   height: 50px;
 }
 
-.toolbar{
-  margin-top: 40px;
+#searchColumn{
+  border: 1px solid #ccc;
+  border-radius: 4px 0 0 4px;
+  width: 120px;
+  height: 30px;
+  margin-top: 5px;
+  margin-left: 20px;
+}
+
+.filter-list{
+  margin-left: 40px;
+  margin-top: 20px;
+
+  color: #000;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif;
+  font-size: 16px;
+  line-height: normal;
+}
+
+.thead-green{
+  background-color: #5ea97c;
+  color: #fff;
 }

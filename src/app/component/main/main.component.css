@@ -10,11 +10,11 @@ h1 {
   color: #42b983;
 }
 
-.v-container--fluid {
+.container--fluid {
   max-width: 100%;
 }
 
-.v-container {
+.container {
   width: 100%;
   margin-right: auto;
   margin-left: auto;
