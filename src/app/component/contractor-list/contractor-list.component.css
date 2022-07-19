@@ -6,7 +6,7 @@ h1 {
   color: #42b983;
 }
 
-.container--fluid {
+.container-contractors {
   max-width: 100%;
 }
 
@@ -78,4 +78,12 @@ a{
 .thead-green{
   background-color: #5ea97c;
   color: #fff;
+}
+
+.form-check{
+  margin-top: 5px;
+}
+
+.bi-search{
+  padding: 0 4px 0 4px;
 }

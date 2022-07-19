@@ -1,0 +1,96 @@
+<div class="container-fluid">
+  <ul class="nav nav-pills  mb-3" id="pills-tab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="contractor-tab" data-bs-toggle="pill" data-bs-target="#pills-contractor"
+              type="button" role="tab" aria-controls="pills-contractor" aria-selected="true">Контрагент</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="pills-agent-tab" data-bs-toggle="pill" data-bs-target="#pills-agent"
+              type="button" role="tab" aria-controls="pills-agent" aria-selected="false">Представители</button>
+    </li>
+  </ul>
+  <div class="tab-content" id="pills-tabContent">
+    <div class="tab-pane fade show active" id="pills-contractor" role="tabpanel" aria-labelledby="pills-contractor-tab" tabindex="0">
+      <form [formGroup]="form" novalidate (ngSubmit)="submit()">
+        <div class="form-group">
+          <div class="row">
+            <div class="col-1">
+              <label>Обозначение</label>
+            </div>
+            <div class="col-6">
+              <input class="form-control form-control-sm" name="lbl" formControlName="lbl" />
+            </div>
+
+            <div class="alert alert-danger"
+                 *ngIf="form.controls['lbl'].invalid && form.controls['lbl'].touched">
+              Не указано обозначение
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-1">
+              <label>Полное название</label>
+            </div>
+            <div class="col-6">
+              <input class="form-control form-control-sm" name="nameFull" formControlName="nameFull" />
+            </div>
+
+            <div class="alert alert-danger"
+                 *ngIf="form.controls['nameFull'].invalid && form.controls['nameFull'].touched">
+              Не указано полное название
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-1">
+              <label>ИНН</label>
+            </div>
+            <div class="col-6">
+              <input class="form-control form-control-sm" name="inn" formControlName="inn" />
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-1">
+              <label>КПП</label>
+            </div>
+            <div class="col-6">
+              <input class="form-control form-control-sm" name="kpp" formControlName="kpp" />
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-success" [disabled]="form.invalid">
+            Сохранить
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div class="tab-pane fade" id="pills-agent" role="tabpanel" aria-labelledby="pills-agent-tab" tabindex="0">
+      <div class="card my-3">
+        <div class="card-body">
+          <table class="table theme-balham table-bordered">
+            <thead class="thead-green">
+            <tr>
+              <th scope="col">Фамилия</th>
+              <th scope="col">Имя</th>
+              <th scope="col">Отчество</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let agent of agents">
+              <td>{{ agent.lastName }}</td>
+              <td>{{ agent.firstName }}</td>
+              <td>{{ agent.midName }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

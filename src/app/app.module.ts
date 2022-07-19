@@ -8,12 +8,14 @@ import { MainComponent } from './component/main/main.component';
 import {HttpClientModule} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ContractorComponent } from './component/contractor/contractor.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ContractorListComponent,
-    MainComponent
+    MainComponent,
+    ContractorComponent
   ],
   imports: [
     BrowserModule,

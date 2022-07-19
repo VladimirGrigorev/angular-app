@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Contractor} from "../../model/contractor";
-import {ContractorService} from "../../service/contractor.service";
+import {ContractorService} from "../../service/contractor/contractor.service";
 import {FormControl} from "@angular/forms";
 import {Filter} from "../../model/filter";
 
@@ -21,6 +21,8 @@ export class ContractorListComponent implements OnInit {
   expression: string = '';
   showExpression: boolean = false;
 
+  isJPA: boolean = true;
+
   filter: Filter = new Filter();
 
   constructor(private contractorService: ContractorService) {
@@ -30,13 +32,16 @@ export class ContractorListComponent implements OnInit {
     this.queryField.valueChanges
       .subscribe(queryField => {
         if (this.searchColumn == "") {
-          this.contractorService.searchAll(queryField)
+          this.contractorService.searchAll(queryField, this.isJPA)
             .subscribe(response => {
               this.result = response;
               this.contractors = this.result.content;
             })
         } else {
-          this.contractorService.filterOneCond(this.searchColumn, "like", "%" + queryField + "%")
+          this.contractorService.filterOneCond(this.searchColumn,
+            "like",
+            "%" + queryField + "%",
+            this.isJPA)
             .subscribe(response => {
               this.result = response;
               this.contractors = this.result.content;
@@ -44,7 +49,7 @@ export class ContractorListComponent implements OnInit {
         }
       });
 
-    this.contractorService.find().subscribe(response => {
+    this.contractorService.find(this.isJPA).subscribe(response => {
       this.result = response;
       this.contractors = this.result.content;
     });
@@ -53,13 +58,16 @@ export class ContractorListComponent implements OnInit {
   searchColumnChange(event: Event): void {
     if(this.queryField.value && this.queryField.value != '') {
       if (this.searchColumn != '')
-        this.contractorService.filterOneCond(this.searchColumn, "like", "%" + this.queryField.value + "%")
+        this.contractorService.filterOneCond(this.searchColumn,
+          "like",
+          "%" + this.queryField.value + "%",
+          this.isJPA)
           .subscribe(response => {
             this.result = response;
             this.contractors = this.result.content;
           })
       else
-        this.contractorService.searchAll(this.queryField.value)
+        this.contractorService.searchAll(this.queryField.value, this.isJPA)
           .subscribe(response => {
             this.result = response;
             this.contractors = this.result.content;
@@ -80,7 +88,7 @@ export class ContractorListComponent implements OnInit {
         "operator": "like",
         "value": "%" + expression + "%"
       });
-      this.contractorService.filter(this.filter)
+      this.contractorService.filter(this.filter, this.isJPA)
         .subscribe(response => {
           this.result = response;
           this.contractors = this.result.content;
@@ -91,7 +99,7 @@ export class ContractorListComponent implements OnInit {
         "operator": "not_like",
         "value": "%" + expression + "%"
       });
-      this.contractorService.filter(this.filter)
+      this.contractorService.filter(this.filter, this.isJPA)
         .subscribe(response => {
           this.result = response;
           this.contractors = this.result.content;
@@ -102,7 +110,7 @@ export class ContractorListComponent implements OnInit {
         "operator": "eq",
         "value": expression
       });
-      this.contractorService.filter(this.filter)
+      this.contractorService.filter(this.filter, this.isJPA)
         .subscribe(response => {
           this.result = response;
           this.contractors = this.result.content;
@@ -113,7 +121,7 @@ export class ContractorListComponent implements OnInit {
         "operator": "not_eq",
         "value": expression
       });
-      this.contractorService.filter(this.filter)
+      this.contractorService.filter(this.filter, this.isJPA)
         .subscribe(response => {
           this.result = response;
           this.contractors = this.result.content;
@@ -124,7 +132,7 @@ export class ContractorListComponent implements OnInit {
         "operator": "like",
         "value": expression + "%"
       });
-      this.contractorService.filter(this.filter)
+      this.contractorService.filter(this.filter, this.isJPA)
         .subscribe(response => {
           this.result = response;
           this.contractors = this.result.content;
@@ -135,7 +143,7 @@ export class ContractorListComponent implements OnInit {
         "operator": "like",
         "value": "%" + expression
       });
-      this.contractorService.filter(this.filter)
+      this.contractorService.filter(this.filter, this.isJPA)
         .subscribe(response => {
           this.result = response;
           this.contractors = this.result.content;
@@ -146,7 +154,7 @@ export class ContractorListComponent implements OnInit {
         "operator": "null",
         "value": ""
       });
-      this.contractorService.filter(this.filter)
+      this.contractorService.filter(this.filter, this.isJPA)
         .subscribe(response => {
           this.result = response;
           this.contractors = this.result.content;
@@ -157,7 +165,7 @@ export class ContractorListComponent implements OnInit {
         "operator": "not_null",
         "value": ""
       });
-      this.contractorService.filter(this.filter)
+      this.contractorService.filter(this.filter, this.isJPA)
         .subscribe(response => {
           this.result = response;
           this.contractors = this.result.content;
@@ -167,7 +175,7 @@ export class ContractorListComponent implements OnInit {
 
   clearFilter() {
     this.filter = new Filter();
-    this.contractorService.find().subscribe(response => {
+    this.contractorService.find(this.isJPA).subscribe(response => {
       this.result = response;
       this.contractors = this.result.content;
     });
@@ -176,15 +184,22 @@ export class ContractorListComponent implements OnInit {
   deleteFilter(i: number) {
     this.filter.cond.splice(i, 1);
     if (this.filter.cond.length == 0)
-      this.contractorService.find().subscribe(response => {
+      this.contractorService.find(this.isJPA).subscribe(response => {
         this.result = response;
         this.contractors = this.result.content;
       });
     else
-      this.contractorService.filter(this.filter)
+      this.contractorService.filter(this.filter, this.isJPA)
         .subscribe(response => {
           this.result = response;
           this.contractors = this.result.content;
         });
+  }
+
+  radioChange(event: Event): void {
+    this.contractorService.find(this.isJPA).subscribe(response => {
+      this.result = response;
+      this.contractors = this.result.content;
+    });
   }
 }
