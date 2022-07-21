@@ -14,13 +14,27 @@
 
 .btn.btn-success{
   margin-top: 20px;
-  margin-left: 20px;
+  margin-bottom: 20px;
 
   background-color: #FFF;
   color: #000;
 }
 
 .container-fluid{
-  margin-top: 60px;
-  margin-left: 40px;
+  padding-top: 30px;
+  padding-left: 40px;
+  padding-right: 40px;
 }
+
+.theme-balham {
+  color: #000;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif;
+  font-size: 14px;
+}
+
+img{
+  height: 80px;
+  max-width: 200px;
+}
+
+

@@ -32,8 +32,15 @@
               <a>Действия</a>
             </button>
             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-              <li><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#filterModal">Фильтр</button></li>
-              <li><button class="dropdown-item" (click)="clearFilter()">Очистить фильтр</button></li>
+              <li><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#filterModal">
+                Фильтр
+              </button></li>
+              <li><button class="dropdown-item" (click)="clearFilter()">
+                Очистить фильтр
+              </button></li>
+              <li><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#selectColumnsModal">
+                Выбрать столбцы
+              </button></li>
             </ul>
           </div>
         </div>
@@ -76,7 +83,7 @@
   </label>
 </div>
 
-<!-- Модальное окно -->
+<!-- Модальное окно 1 -->
 <div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -125,6 +132,63 @@
   </div>
 </div>
 
+<!-- Модальное окно 2 -->
+<div class="modal fade" id="selectColumnsModal" tabindex="-1" aria-labelledby="selectColumnsModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="selectColumnsModalLabel">Выбор столбцов</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+      </div>
+      <div class="modal-body">
+
+        <form [formGroup]="form" novalidate>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input checked class="form-check-input" type="checkbox" value="lbl" (change)="onCheckboxChange($event)" />
+              Обозначение
+            </label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input checked class="form-check-input" type="checkbox" value="nameFull" (change)="onCheckboxChange($event)" />
+              Полное название
+            </label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input checked class="form-check-input" type="checkbox" value="address" (change)="onCheckboxChange($event)" />
+              Юридический адрес
+            </label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input checked class="form-check-input" type="checkbox" value="inn" (change)="onCheckboxChange($event)" />
+              ИНН
+            </label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input checked class="form-check-input" type="checkbox" value="kpp" (change)="onCheckboxChange($event)" />
+              КПП
+            </label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input checked class="form-check-input" type="checkbox" value="listWork" (change)="onCheckboxChange($event)" />
+              Укрупненный перечень товаров/услуг
+            </label>
+          </div>
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Закрыть</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Таблица контрагентов -->
 <div class="card my-3">
   <div class="card-body">
@@ -132,24 +196,24 @@
       <thead class="thead-green">
       <tr>
         <th scope="col"></th>
-        <th scope="col">Обозначение</th>
-        <th scope="col">Полное название</th>
-        <th scope="col">Юридический адрес</th>
-        <th scope="col">ИНН</th>
-        <th scope="col">КПП</th>
-        <th scope="col">Укрупненный перечень товаров/услуг</th>
+        <th *ngIf="checkArray.value.includes('lbl')" scope="col">Обозначение</th>
+        <th *ngIf="checkArray.value.includes('nameFull')" scope="col">Полное название</th>
+        <th *ngIf="checkArray.value.includes('address')" scope="col">Юридический адрес</th>
+        <th *ngIf="checkArray.value.includes('inn')" scope="col">ИНН</th>
+        <th *ngIf="checkArray.value.includes('kpp')" scope="col">КПП</th>
+        <th *ngIf="checkArray.value.includes('listWork')" scope="col">Укрупненный перечень товаров/услуг</th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let contractor of contractors">
         <td><button type="button" class="btn btn-light bi bi-search"
                     [routerLink]="['/contractor', contractor.objectId]"></button></td>
-        <td>{{ contractor.lbl }}</td>
-        <td>{{ contractor.nameFull }}</td>
-        <td>{{ contractor.address }}</td>
-        <td>{{ contractor.inn }}</td>
-        <td>{{ contractor.kpp }}</td>
-        <td>{{ contractor.listWork }}</td>
+        <td *ngIf="checkArray.value.includes('lbl')">{{ contractor.lbl }}</td>
+        <td *ngIf="checkArray.value.includes('nameFull')">{{ contractor.nameFull }}</td>
+        <td *ngIf="checkArray.value.includes('address')">{{ contractor.address }}</td>
+        <td *ngIf="checkArray.value.includes('inn')">{{ contractor.inn }}</td>
+        <td *ngIf="checkArray.value.includes('kpp')">{{ contractor.kpp }}</td>
+        <td *ngIf="checkArray.value.includes('listWork')">{{ contractor.listWork }}</td>
       </tr>
       </tbody>
     </table>

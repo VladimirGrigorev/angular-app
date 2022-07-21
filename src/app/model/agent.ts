@@ -3,4 +3,7 @@ export interface Agent {
   lastName: string;
   firstName: string;
   midName: string;
+  fnCharter: string;
+  ftCharter: string;
+  lnCharter: string;
 }

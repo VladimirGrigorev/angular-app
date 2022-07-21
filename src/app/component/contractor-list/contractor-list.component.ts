@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Contractor} from "../../model/contractor";
 import {ContractorService} from "../../service/contractor/contractor.service";
-import {FormControl} from "@angular/forms";
+import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {Filter} from "../../model/filter";
 
 @Component({
@@ -25,10 +25,22 @@ export class ContractorListComponent implements OnInit {
 
   filter: Filter = new Filter();
 
-  constructor(private contractorService: ContractorService) {
+  form: FormGroup;
+  checkArray: FormArray;
+
+  constructor(
+    private contractorService: ContractorService,
+    private fb: FormBuilder
+  ) {
+    this.form = this.fb.group({
+      checkArray: this.fb.array([])
+    });
+    this.checkArray = this.form.get('checkArray') as FormArray;
   }
 
   ngOnInit() {
+    this.initCheckArray()
+
     this.queryField.valueChanges
       .subscribe(queryField => {
         if (this.searchColumn == "") {
@@ -201,5 +213,35 @@ export class ContractorListComponent implements OnInit {
       this.result = response;
       this.contractors = this.result.content;
     });
+  }
+
+  onCheckboxChange(e: Event) {
+    this.checkArray = this.form.get('checkArray') as FormArray;
+    const ischecked = (<HTMLInputElement>e.target).checked;
+    const value = (<HTMLInputElement>e.target).value;
+
+    if (ischecked) {
+      this.checkArray.push(new FormControl(value));
+    } else {
+      let i: number = 0;
+      this.checkArray.controls.forEach((item: AbstractControl) => {
+        if (item.value == value) {
+          this.checkArray.removeAt(i);
+          return;
+        }
+        i++;
+      });
+    }
+
+  }
+
+  initCheckArray(){
+    this.checkArray = this.form.get('checkArray') as FormArray;
+    this.checkArray.push(new FormControl("lbl"));
+    this.checkArray.push(new FormControl("nameFull"));
+    this.checkArray.push(new FormControl("address"));
+    this.checkArray.push(new FormControl("inn"));
+    this.checkArray.push(new FormControl("kpp"));
+    this.checkArray.push(new FormControl("listWork"));
   }
 }
